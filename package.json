@@ -5,11 +5,10 @@
   "author": "DocCobra",
   "license": "MIT",
   "type": "module",
-  "main": "index.js",
-  "bin": "dist/index.mjs",
+  "main": "dist/index",
   "scripts": {
-    "build": "tsc && pkg .",
-    "exec": "tsx src/index.mts",
+    "start": "tsx src/index.mts",
+    "build": "vite build && node --experimental-sea-config sea.config.json && node -e \"require('fs').mkdirSync('dist/bin')\" && node -e \"require('fs').copyFileSync(process.execPath, 'dist/bin/ttv-clip-timestamper.exe')\" && postject dist/bin/ttv-clip-timestamper.exe NODE_SEA_BLOB dist/sea.blob --sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "homepage": "https://github.com/DocCobra/TTVClipTimestamper#readme",
@@ -20,13 +19,9 @@
   "devDependencies": {
     "@types/node": "^22.13.1",
     "chalk": "^5.4.1",
-    "pkg": "^5.8.1",
+    "postject": "^1.0.0-alpha.6",
     "tsx": "^4.19.2",
-    "typescript": "^5.7.3"
-  },
-  "pkg": {
-    "scripts": "dist/*.js",
-    "targets": ["node16-win-x64"],
-    "outputPath": "dist/bin"
-  }  
+    "typescript": "^5.7.3",
+    "vite": "^6.1.0"
+  }
 }

@@ -33,3 +33,5 @@ export interface ClipInfo {
   vod_offset: number;
   is_featured: boolean;
 }
+
+export default { }; 

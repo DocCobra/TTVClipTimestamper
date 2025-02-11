@@ -92,7 +92,7 @@ async function storeCredentials(): Promise<void> {
   console.log(chalk.magentaBright('  >  '), chalk.magenta('Stored Client Id and Secret.'));
 }
 
-async function askCredentials(): Promise<void> {
+async function askCredentials(prompter: readline.Interface): Promise<void> {
   CLIENT_ID = await prompter.question(`${chalk.magentaBright('  >  ')}${chalk.magenta('Provide Client Id: ')}`);
   CLIENT_SECRET = await prompter.question(`${chalk.magentaBright('  >  ')}${chalk.magenta('Provide Client Secret: ')}`);
   
@@ -106,7 +106,7 @@ async function askCredentials(): Promise<void> {
   await storeCredentials(); 
 }
 
-async function getCredentials(): Promise<void> {
+async function getCredentials(prompter: readline.Interface): Promise<void> {
   if (
     (await Promise.all([
       exists(__AUTH_ID_PATH),
@@ -116,7 +116,7 @@ async function getCredentials(): Promise<void> {
     await readStoredCredentials(); 
   }
   else {
-    await askCredentials(); 
+    await askCredentials(prompter); 
   }  
 }
 
@@ -272,22 +272,26 @@ async function renameAllClips(clipFilesList: ClipFile[], clipInfoList: ClipInfo[
 }
 
 
-const prompter = readline.createInterface(stdin, stdout);
+(async () => {
 
-console.log();
-console.log(chalk.bgMagentaBright('   TTV Clip Timestamper   '));
-console.log();
-console.log(); 
+  const prompter: readline.Interface = readline.createInterface(stdin, stdout);
 
-await getCredentials(); 
+  console.log();
+  console.log(chalk.bgMagentaBright('   TTV Clip Timestamper   '));
+  console.log();
+  console.log(); 
 
-CLIENT_TOKEN = (await requestToken()).access_token; 
+  await getCredentials(prompter); 
 
-const clipFilesList: ClipFile[] = await getClipFilesList(); 
-const clipInfoList: ClipInfo[] = await requestClipInfo(clipFilesList); 
+  CLIENT_TOKEN = (await requestToken()).access_token; 
 
-await renameAllClips(clipFilesList, clipInfoList); 
+  const clipFilesList: ClipFile[] = await getClipFilesList(); 
+  const clipInfoList: ClipInfo[] = await requestClipInfo(clipFilesList); 
+
+  await renameAllClips(clipFilesList, clipInfoList); 
 
 
-await prompter.question(''); 
-exit(0); 
+  await prompter.question(''); 
+  exit(0); 
+
+})(); 
