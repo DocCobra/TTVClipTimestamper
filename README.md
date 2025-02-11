@@ -1,2 +1,2 @@
 # TTVClipTimestamper
-Timestamper script for downloader Twitch clips.
+Timestamper script for downloading Twitch clips.

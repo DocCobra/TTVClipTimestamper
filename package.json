@@ -1,0 +1,25 @@
+{
+  "name": "ttv-clip-timestamper",
+  "version": "0.0.1",
+  "description": "Timestamper script for downloading Twitch clips.",
+  "author": "DocCobra",
+  "license": "MIT",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "build": "",
+    "exec": "tsx src/index.mts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "homepage": "https://github.com/DocCobra/TTVClipTimestamper#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DocCobra/TTVClipTimestamper.git"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.1",
+    "chalk": "^5.4.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  }
+}
