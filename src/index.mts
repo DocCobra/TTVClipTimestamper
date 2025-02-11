@@ -5,6 +5,7 @@ import * as readline from 'readline/promises';
 import { fileURLToPath } from 'url';
 import { ClipFile, ClipInfo, ClipInfoResponse, TokenInfo } from './types.mjs';
 import { exit, stdin, stdout } from 'process';
+import { format } from 'date-fns'; 
 
 
 const __filename: string = fileURLToPath(import.meta.url);
@@ -210,13 +211,15 @@ async function requestClipInfo(clipFiles: ClipFile[]): Promise<ClipInfo[]> {
 
 async function renameClip(clipFile: ClipFile, clipInfo: ClipInfo): Promise<void> {
   const date = new Date(clipInfo.created_at); 
-  const dateFormatted = `
-    ${date.getFullYear().toString().padStart(4, '0')}-${date.getMonth().toString().padStart(2, '0')}-${date.getDay().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}.${date.getMinutes().toString().padStart(2, '0')}
-  `.trim(); 
+  const dateFormatted = format(date, 'yyyy-MM-dd HH.mm')
 
   const timestampedName: string = `${dateFormatted} - ${clipInfo.title}.mp4`; 
 
-  const logEntry: string = `\n\t- ${basename(clipFile.path)}\n\t=> ${timestampedName}`; 
+  const logEntry: string =
+    `\n\n\t- ${basename(clipFile.path)}` + 
+    `\n\t=> ${timestampedName}` + 
+    `\n\t(from: ${clipInfo.created_at})`; 
+
   console.log(chalk.magenta(`${logEntry}`));
 
   await rename(
