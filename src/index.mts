@@ -219,13 +219,13 @@ async function renameClip(clipFile: ClipFile, clipInfo: ClipInfo): Promise<void>
   const logEntry: string = `\n\t- ${basename(clipFile.path)}\n\t=> ${timestampedName}`; 
   console.log(chalk.magenta(`${logEntry}`));
 
-  // await rename(
-  //   clipFile.path,
-  //   join(
-  //     dirname(clipFile.path),
-  //     timestampedName
-  //   )
-  // ); 
+  await rename(
+    clipFile.path,
+    join(
+      dirname(clipFile.path),
+      timestampedName
+    )
+  ); 
 
   await appendFile(__RENAME_LOG, logEntry); 
 }
@@ -289,5 +289,5 @@ const clipInfoList: ClipInfo[] = await requestClipInfo(clipFilesList);
 await renameAllClips(clipFilesList, clipInfoList); 
 
 
-
+await prompter.question(''); 
 exit(0); 

@@ -14,9 +14,11 @@
     "skipLibCheck": true,
 
     "typeRoots": ["node_modules/@types"],
-    "types": ["node"]
+    "types": ["node"],
+
+    "outDir": "dist/"
   },
 
-  "include": ["src/index.mts"],
+  "include": ["src/*.mts"],
   "exclude": ["node_modules"]
 }
